@@ -36,7 +36,7 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente")
 	private List<Demanda> demandas;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(
 			name = "cliente_casa_construcao",
 			joinColumns = @JoinColumn(name = "cliente_id"),

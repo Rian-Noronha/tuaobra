@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS public.endereco
     CONSTRAINT endereco_pkey PRIMARY KEY (id)
 );
 
-
 CREATE TABLE IF NOT EXISTS public.especialidade
 (
     id bigint NOT NULL,
@@ -97,6 +96,7 @@ CREATE TABLE IF NOT EXISTS public.pedreiro
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );
+
 
 CREATE TABLE IF NOT EXISTS public.pedreiro_demanda
 (

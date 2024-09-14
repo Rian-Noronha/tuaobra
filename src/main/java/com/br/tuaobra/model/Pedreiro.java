@@ -31,7 +31,7 @@ public class Pedreiro {
 	private String email;
 	private double avaliacao;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(
 			name = "pedreiro_especialidade",
 			joinColumns = @JoinColumn(name = "pedreiro_id"),
@@ -42,7 +42,7 @@ public class Pedreiro {
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(
 			name = "pedreiro_demanda",
 			joinColumns = @JoinColumn(name = "pedreiro_id"),

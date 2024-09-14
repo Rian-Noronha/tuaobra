@@ -27,6 +27,7 @@ public class CasaConstrucao {
 	private String descricao;
 	private String horario;
 	private double avaliacao;
+	private String urlImagemPerfil;
 	private String frete;
 	private String email;
 	private String contatoWhatsApp;

@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS public.casa_construcao
     horario character varying(255) COLLATE pg_catalog."default",
     nome character varying(255) COLLATE pg_catalog."default",
     endereco_id bigint,
+    url_imagem_perfil character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT casa_construcao_pkey PRIMARY KEY (id),
     CONSTRAINT ukfqwffiw5r20h929abu1t2pkyp UNIQUE (endereco_id),
     CONSTRAINT fk37g7h03b6oy0b1nox9t000ay1 FOREIGN KEY (endereco_id)

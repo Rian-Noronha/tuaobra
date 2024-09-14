@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS public.demanda
     detalhes character varying(255) COLLATE pg_catalog."default",
     trabalho_ser_feito character varying(255) COLLATE pg_catalog."default",
     cliente_id bigint,
+    cep_onde_sera character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT demanda_pkey PRIMARY KEY (id),
     CONSTRAINT fklshxbeku0cmwq6ttoa7co7qr7 FOREIGN KEY (cliente_id)
         REFERENCES public.cliente (id) MATCH SIMPLE

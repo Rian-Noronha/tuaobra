@@ -23,6 +23,7 @@ public class Demanda {
 	private Long id;
 	private String detalhes;
 	private String trabalhoSerFeito;
+	private String cepOndeSera;
 	private LocalDateTime dataPublicacao;
 	
 	@ManyToMany(mappedBy = "demandas")

@@ -1,16 +1,11 @@
 package com.br.tuaobra.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,19 +14,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Demanda {
+public class ClienteCasaConstrucao {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String detalhes;
-	private String trabalhoSerFeito;
-	private String cepOndeSera;
-	private LocalDateTime dataPublicacao;
-
-	@OneToMany(mappedBy = "demanda", cascade = CascadeType.ALL)
-	private List<PedreiroDemanda> pedreirosDemanda;
 
 	@ManyToOne
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
+	@ManyToOne
+	@JoinColumn(name = "casa_construcao_id")
+	private CasaConstrucao casaConstrucao;
+
+	private double avaliacao;
 }

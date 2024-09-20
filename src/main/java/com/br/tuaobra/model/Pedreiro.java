@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pedreiro {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -29,24 +30,16 @@ public class Pedreiro {
 	private String nome;
 	private String contatoWhatsApp;
 	private String email;
-	private double avaliacao;
-	
+
 	@ManyToMany
-	@JoinTable(
-			name = "pedreiro_especialidade",
-			joinColumns = @JoinColumn(name = "pedreiro_id"),
-			inverseJoinColumns = @JoinColumn(name = "especialidade_id"))
+	@JoinTable(name = "pedreiro_especialidade", joinColumns = @JoinColumn(name = "pedreiro_id"), inverseJoinColumns = @JoinColumn(name = "especialidade_id"))
 	private List<Especialidade> especialidades;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
-	
-	@ManyToMany
-	@JoinTable(
-			name = "pedreiro_demanda",
-			joinColumns = @JoinColumn(name = "pedreiro_id"),
-			inverseJoinColumns = @JoinColumn(name = "demanda_id"))
-	private List<Demanda> demandas;
+
+	@OneToMany(mappedBy = "pedreiro", cascade = CascadeType.ALL)
+	private List<PedreiroDemanda> demandasPedreiro;
 
 }

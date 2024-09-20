@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,26 +20,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CasaConstrucao {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String descricao;
 	private String horario;
-	private double avaliacao;
 	private String urlImagemPerfil;
 	private String frete;
 	private String email;
 	private String contatoWhatsApp;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
-	
-	@ManyToMany(mappedBy = "casasConstrucao")
-	private List<Cliente> clientes;
-	
-	
+
+	@OneToMany(mappedBy = "casaConstrucao", cascade = CascadeType.ALL)
+	private List<ClienteCasaConstrucao> clientes;
 
 }

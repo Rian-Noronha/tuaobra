@@ -85,12 +85,11 @@ public class PedreiroService {
 			    pedre.setDescricao(pedreiro.getDescricao());
 			    pedre.setNome(pedreiro.getNome());
 			    pedre.setContatoWhatsApp(pedreiro.getContatoWhatsApp());
-			    pedre.setAvaliacao(pedreiro.getAvaliacao());
 			    
 			   
 			    pedre.setEspecialidades(pedreiro.getEspecialidades());
 			    pedre.setEndereco(pedreiro.getEndereco());
-			    pedre.setDemandas(pedreiro.getDemandas());
+			    pedre.setDemandasPedreiro(pedreiro.getDemandasPedreiro());
 			    
 			    return this.pedreiroRepository.save(pedre);
 		}else {
@@ -105,8 +104,7 @@ public class PedreiroService {
 				|| !StringUtils.hasLength(pedreiro.getUrlImagemPerfil())
 				|| !StringUtils.hasLength(pedreiro.getDescricao())
 				|| !StringUtils.hasLength(pedreiro.getContatoWhatsApp())
-				|| !StringUtils.hasLength(pedreiro.getEmail())
-				|| pedreiro.getAvaliacao() == 0) {
+				|| !StringUtils.hasLength(pedreiro.getEmail())) {
 			checados = false;
 		}
 		

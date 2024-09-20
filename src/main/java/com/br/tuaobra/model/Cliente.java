@@ -1,4 +1,5 @@
 package com.br.tuaobra.model;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Cliente {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -28,20 +29,19 @@ public class Cliente {
 	private String email;
 	private String urlImagemPerfil;
 	private String contatoWhatsApp;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
-	
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Demanda> demandas;
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<ClienteCasaConstrucao> casasConstrucao;
 	
-	@ManyToMany
-	@JoinTable(
-			name = "cliente_casa_construcao",
-			joinColumns = @JoinColumn(name = "cliente_id"),
-			inverseJoinColumns = @JoinColumn(name = "casa_construcao_id"))
-	private List<CasaConstrucao> casasConstrucao;
-	
-	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<PedreiroDemanda> avaliacaoPedreiroDemanda; 
+
+
 }

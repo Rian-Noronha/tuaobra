@@ -34,7 +34,7 @@ public class Cliente {
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Demanda> demandas;
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)

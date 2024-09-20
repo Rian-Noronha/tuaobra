@@ -1,4 +1,4 @@
-package com.br.tuaobra.controllers;
+package com.br.tuaobra.controller;
 
 import java.util.List;
 

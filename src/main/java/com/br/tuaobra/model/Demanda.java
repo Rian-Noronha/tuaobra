@@ -31,7 +31,7 @@ public class Demanda {
 	@OneToMany(mappedBy = "demanda", cascade = CascadeType.ALL)
 	private List<PedreiroDemanda> pedreirosDemanda;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Cliente cliente;
 
 }

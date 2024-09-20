@@ -2,8 +2,6 @@ package com.br.tuaobra.service;
 
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,6 +21,7 @@ public class PedreiroService {
 	
 	
 	public void salvarPedreiro(Pedreiro pedreiro) {
+		
 		if(pedreiro == null) {
 			throw new RuntimeException("Pedreiro está nulo");
 		}
@@ -30,6 +29,8 @@ public class PedreiroService {
 		if(pedreiro.getId() != null) {
 			pedreiro.setId(null);
 		}
+		
+		System.out.println(pedreiro);
 		
 		boolean camposChecados = checarCampos(pedreiro);
 		validarEmail(pedreiro.getEmail());
@@ -105,10 +106,7 @@ public class PedreiroService {
 				|| !StringUtils.hasLength(pedreiro.getDescricao())
 				|| !StringUtils.hasLength(pedreiro.getContatoWhatsApp())
 				|| !StringUtils.hasLength(pedreiro.getEmail())
-				|| pedreiro.getAvaliacao() == 0
-				|| pedreiro.getEspecialidades() == null
-				|| pedreiro.getEndereco() == null
-				|| pedreiro.getDemandas() == null) {
+				|| pedreiro.getAvaliacao() == 0) {
 			checados = false;
 		}
 		

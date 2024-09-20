@@ -2,6 +2,8 @@ package com.br.tuaobra.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Especialidade {
 	private String nome;
 	
 	@ManyToMany(mappedBy = "especialidades")
+	@JsonIgnore
 	private List<Pedreiro> pedreiros;
 
 }

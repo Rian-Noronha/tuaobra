@@ -1,0 +1,1 @@
+ALTER TABLE casa_construcao ADD COLUMN url_lista_orcamento VARCHAR(255);

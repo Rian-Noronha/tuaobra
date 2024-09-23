@@ -1,7 +1,11 @@
 package com.br.tuaobra.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PedreiroDemandaRepository extends JpaRepository<PedreiroDemandaRepository, Long>{
+import com.br.tuaobra.model.PedreiroDemanda;
+
+@Repository
+public interface PedreiroDemandaRepository extends JpaRepository<PedreiroDemanda, Long>{
 
 }

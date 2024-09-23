@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.br.tuaobra.model.Cliente;
 import com.br.tuaobra.model.Demanda;
+import com.br.tuaobra.repository.ClienteRepository;
 import com.br.tuaobra.repository.DemandaRepository;
 import com.br.tuaobra.utils.exceptions.CamposNaoValidadosException;
+import com.br.tuaobra.utils.exceptions.ClienteNaoEncontradoException;
 import com.br.tuaobra.utils.exceptions.DemandaNaoEncontradaException;
 import com.br.tuaobra.utils.exceptions.DemandaNulaException;
 
@@ -17,6 +20,9 @@ public class DemandaService {
 
 	@Autowired
 	private DemandaRepository demandaRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	public void salvarDemanda(Demanda demanda) {
 		if (demanda == null) {
@@ -26,9 +32,17 @@ public class DemandaService {
 		if (demanda.getId() != null) {
 			demanda.setId(null);
 		}
+		
 
 		if (checarCampos(demanda)) {
+			
+			Cliente clienteExistente = clienteRepository.findById(demanda.getCliente().getId())
+					.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
+			
+			demanda.setCliente(clienteExistente);
+			
 			this.demandaRepository.save(demanda);
+			
 		} else {
 			throw new CamposNaoValidadosException("Campos da demanda não foram validados");
 		}

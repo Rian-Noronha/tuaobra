@@ -3,6 +3,8 @@ package com.br.tuaobra.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +31,11 @@ public class Demanda {
 	private LocalDateTime dataPublicacao;
 
 	@OneToMany(mappedBy = "demanda", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<PedreiroDemanda> pedreirosDemanda;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Cliente cliente;
 
 }

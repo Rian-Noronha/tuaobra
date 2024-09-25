@@ -1,7 +1,6 @@
 package com.br.tuaobra.model;
 
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -39,7 +36,11 @@ public class Pedreiro {
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
 
-	@OneToMany(mappedBy = "pedreiro", cascade = CascadeType.ALL)
-	private List<PedreiroDemanda> demandasPedreiro;
+	@ManyToMany
+	@JoinTable(
+			name = "pedreiro_demanda",
+			joinColumns = @JoinColumn(name = "pedreiro_id"),
+			inverseJoinColumns = @JoinColumn(name = "demanda_id"))
+	private List<Demanda> demandas;
 
 }

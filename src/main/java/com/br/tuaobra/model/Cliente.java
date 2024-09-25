@@ -38,11 +38,11 @@ public class Cliente {
 	@JsonManagedReference
 	private List<Demanda> demandas;
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<ClienteCasaConstrucao> casasConstrucao;
-	
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	private List<PedreiroDemanda> avaliacaoPedreiroDemanda; 
-
+	@ManyToMany
+	@JoinTable(
+			name = "cliente_casa_construcao",
+			joinColumns = @JoinColumn(name = "cliente_id"),
+			inverseJoinColumns = @JoinColumn(name = "casa_construcao_id"))
+	private List<CasaConstrucao> casasConstrucao;
 
 }

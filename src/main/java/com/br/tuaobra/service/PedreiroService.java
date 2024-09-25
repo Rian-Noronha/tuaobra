@@ -89,8 +89,7 @@ public class PedreiroService {
 			   
 			    pedre.setEspecialidades(pedreiro.getEspecialidades());
 			    pedre.setEndereco(pedreiro.getEndereco());
-			    pedre.setDemandasPedreiro(pedreiro.getDemandasPedreiro());
-			    
+			    		    
 			    return this.pedreiroRepository.save(pedre);
 		}else {
 			throw new RuntimeException("Por favor, preencha todos os campos");

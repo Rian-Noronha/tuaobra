@@ -86,7 +86,6 @@ public class DemandaService {
 			deman.setTrabalhoSerFeito(demanda.getTrabalhoSerFeito());
 			deman.setCepOndeSera(demanda.getCepOndeSera());
 			deman.setDataPublicacao(demanda.getDataPublicacao());
-			deman.setPedreirosDemanda(demanda.getPedreirosDemanda());
 			deman.setCliente(demanda.getCliente());
 
 			return this.demandaRepository.save(deman);

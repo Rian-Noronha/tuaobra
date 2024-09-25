@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.br.tuaobra.model.Cliente;
-import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.repository.ClienteRepository;
 import com.br.tuaobra.utils.exceptions.CamposNaoValidadosException;
 import com.br.tuaobra.utils.exceptions.ClienteNaoEncontradoException;
@@ -31,8 +30,6 @@ public class ClienteService {
 			cliente.setId(null);
 		}
 		
-		System.out.println(cliente);
-
 		validarEmail(cliente.getEmail());
 
 		if (clienteRepository.findByEmail(cliente.getEmail()).isPresent()) {
@@ -40,7 +37,6 @@ public class ClienteService {
 		}
 
 		if (checarCampos(cliente)) {
-			cliente.getDemandas().forEach(demanda -> demanda.setCliente(cliente));
 			this.clienteRepository.save(cliente);
 		} else {
 			throw new CamposNaoValidadosException("Campos do cliente não foram validados");
@@ -88,7 +84,6 @@ public class ClienteService {
 			client.setEndereco(cliente.getEndereco());
 			client.setDemandas(cliente.getDemandas());
 			client.setCasasConstrucao(cliente.getCasasConstrucao());
-			client.setAvaliacaoPedreiroDemanda(cliente.getAvaliacaoPedreiroDemanda());
 			
 			return this.clienteRepository.save(client);
 		}else {
@@ -101,8 +96,7 @@ public class ClienteService {
 
 		if (!StringUtils.hasLength(cliente.getNome()) || !StringUtils.hasLength(cliente.getEmail())
 				|| !StringUtils.hasLength(cliente.getUrlImagemPerfil())
-				|| !StringUtils.hasLength(cliente.getContatoWhatsApp()) || cliente.getEndereco() == null
-				|| cliente.getDemandas() == null){
+				|| !StringUtils.hasLength(cliente.getContatoWhatsApp()) || cliente.getEndereco() == null){
 			checados = false;
 		}
 

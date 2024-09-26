@@ -45,7 +45,7 @@ O sistema TuaObra tem como objetivo conectar pedreiros, clientes e casas de cons
     ```
 
 4. **Legendas para os comandos dos Commits**
-- **[feat] - para novos recursos**:
+- **[feat] - para novos recursos**
 - **[fix] - para correções de bugs**
 - **[docs] - mudanças na documentação**
 - **[style] - mudanças de formatação, sem impacto no código**

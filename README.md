@@ -45,10 +45,10 @@ O sistema TuaObra tem como objetivo conectar pedreiros, clientes e casas de cons
     ```
 
 4. **Legendas para os comandos dos Commits**
-[feat] - para novos recursos
-[fix] - para correções de bugs
-[docs] - mudanças na documentação
-[style] - mudanças de formatação, sem impacto no código
-[refactor] - refatoração de código, sem adição de novos recursos ou correção de bugs
-[test] - adição ou alteração de testes
-[chore] - tarefas menores, como mudanças de configurações
+- **[feat] - para novos recursos**:
+- **[fix] - para correções de bugs**
+- **[docs] - mudanças na documentação**
+- **[style] - mudanças de formatação, sem impacto no código**
+- **[refactor] - refatoração de código, sem adição de novos recursos ou correção de bugs**
+- **[test] - adição ou alteração de testes**
+- **[chore] - tarefas menores, como mudanças de configurações**

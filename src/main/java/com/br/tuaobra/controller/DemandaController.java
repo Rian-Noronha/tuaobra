@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.tuaobra.model.Demanda;
+import com.br.tuaobra.model.dto.DemandaClienteDTO;
 import com.br.tuaobra.service.DemandaService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,8 +33,15 @@ public class DemandaController {
 	}
 	
 	@GetMapping("/demanda/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public Demanda buscarPorId(@PathVariable Long id) {
 		return this.demandaService.buscarDemanda(id);
+	}
+	
+	@GetMapping("/demandacliente/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public DemandaClienteDTO buscarDemandaClientePorId(@PathVariable Long id) {
+		return this.demandaService.buscarDemandaCliente(id);
 	}
 	
 	@DeleteMapping("/demanda/{id}")

@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import com.br.tuaobra.model.Cliente;
 import com.br.tuaobra.model.Demanda;
+import com.br.tuaobra.model.dto.DemandaClienteDTO;
 import com.br.tuaobra.repository.ClienteRepository;
 import com.br.tuaobra.repository.DemandaRepository;
 import com.br.tuaobra.utils.exceptions.CamposNaoValidadosException;
@@ -51,10 +52,31 @@ public class DemandaService {
 	public List<Demanda> listarDemandas() {
 		return this.demandaRepository.findAll();
 	}
+	
+	
 
 	public Demanda buscarDemanda(Long id) {
 		return this.demandaRepository.findById(id)
 				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada"));
+	}
+	
+	public DemandaClienteDTO buscarDemandaCliente(Long id) {
+		Demanda demanda = this.demandaRepository.findById(id)
+				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada"));
+		Cliente cliente = this.clienteRepository.findById(demanda.getCliente().getId())
+				.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
+		
+		DemandaClienteDTO demandaClienteDTO = new DemandaClienteDTO();
+		demandaClienteDTO.setDetalhes(demanda.getDetalhes());
+		demandaClienteDTO.setDataPublicacao(demanda.getDataPublicacao());
+		demandaClienteDTO.setTrabalhoASerFeito(demanda.getTrabalhoSerFeito());
+		demandaClienteDTO.setCep(demanda.getCepOndeSera());
+		demandaClienteDTO.setNomeCliente(cliente.getNome());
+		demandaClienteDTO.setEmailCliente(cliente.getEmail());
+		demandaClienteDTO.setContatoCliente(cliente.getContatoWhatsApp());
+		
+		return demandaClienteDTO;
+		
 	}
 
 	public void deletarDemanda(Long id) {

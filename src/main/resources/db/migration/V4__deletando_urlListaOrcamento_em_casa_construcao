@@ -1,0 +1,2 @@
+ALTER TABLE public.casa_construcao
+DROP COLUMN url_lista_orcamento;

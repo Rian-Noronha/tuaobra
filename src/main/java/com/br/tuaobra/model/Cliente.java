@@ -30,6 +30,7 @@ public class Cliente {
 	private String nome;
 	private String email;
 	private String urlImagemPerfil;
+	private String urlListaOrcamento;
 	private String contatoWhatsApp;
 
 	@OneToOne(cascade = CascadeType.ALL)

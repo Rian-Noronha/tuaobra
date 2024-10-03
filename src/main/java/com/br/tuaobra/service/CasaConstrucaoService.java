@@ -82,7 +82,6 @@ public class CasaConstrucaoService {
 			casaConstru.setDescricao(casaConstrucao.getDescricao());
 			casaConstru.setHorario(casaConstrucao.getHorario());
 			casaConstru.setUrlImagemPerfil(casaConstrucao.getUrlImagemPerfil());
-			casaConstru.setUrlListaOrcamento(casaConstrucao.getUrlListaOrcamento());
 			casaConstru.setFrete(casaConstrucao.getFrete());
 			casaConstru.setContatoWhatsApp(casaConstrucao.getContatoWhatsApp());
 			casaConstru.setEndereco(casaConstrucao.getEndereco());
@@ -100,7 +99,6 @@ public class CasaConstrucaoService {
 		if (!StringUtils.hasLength(casaConstrucao.getNome()) || !StringUtils.hasLength(casaConstrucao.getDescricao())
 				|| !StringUtils.hasLength(casaConstrucao.getHorario())
 				|| !StringUtils.hasLength(casaConstrucao.getUrlImagemPerfil())
-				|| !StringUtils.hasLength(casaConstrucao.getUrlListaOrcamento())
 				|| !StringUtils.hasLength(casaConstrucao.getFrete())
 				|| !StringUtils.hasLength(casaConstrucao.getEmail())
 				|| !StringUtils.hasLength(casaConstrucao.getContatoWhatsApp())

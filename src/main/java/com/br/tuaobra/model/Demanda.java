@@ -3,6 +3,8 @@ package com.br.tuaobra.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringExclude;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -28,9 +30,11 @@ public class Demanda {
 	private String cepOndeSera;
 	private LocalDateTime dataPublicacao;
 
+	@ToStringExclude
 	@ManyToMany(mappedBy = "demandas")
 	private List<Pedreiro> pedreiros;
-
+	
+	@ToStringExclude
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonBackReference
 	private Cliente cliente;

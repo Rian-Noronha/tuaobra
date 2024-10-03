@@ -30,8 +30,6 @@ public class PedreiroService {
 			pedreiro.setId(null);
 		}
 		
-		System.out.println(pedreiro);
-		
 		boolean camposChecados = checarCampos(pedreiro);
 		validarEmail(pedreiro.getEmail());
 		

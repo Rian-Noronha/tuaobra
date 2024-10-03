@@ -82,6 +82,7 @@ public class ClienteService {
 			client.setUrlImagemPerfil(cliente.getUrlImagemPerfil());
 			client.setContatoWhatsApp(cliente.getContatoWhatsApp());
 			client.setEndereco(cliente.getEndereco());
+			client.setUrlListaOrcamento(cliente.getUrlListaOrcamento());
 			client.setDemandas(cliente.getDemandas());
 			client.setCasasConstrucao(cliente.getCasasConstrucao());
 			

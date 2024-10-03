@@ -2,8 +2,9 @@ package com.br.tuaobra.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,11 +33,12 @@ public class Cliente {
 	private String urlImagemPerfil;
 	private String urlListaOrcamento;
 	private String contatoWhatsApp;
-
+	
+	@ToStringExclude
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
-
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Demanda> demandas;

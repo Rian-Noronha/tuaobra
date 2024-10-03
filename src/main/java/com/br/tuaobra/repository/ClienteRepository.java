@@ -9,7 +9,7 @@ import com.br.tuaobra.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-	
-	Optional<Cliente> findByEmail(String email);
-	
+
+    Optional<Cliente> findByEmail(String email);
+
 }

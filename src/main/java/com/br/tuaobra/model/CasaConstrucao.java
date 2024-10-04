@@ -30,6 +30,7 @@ public class CasaConstrucao {
 	private String frete;
 	private String email;
 	private String contatoWhatsApp;
+	private String senha;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")

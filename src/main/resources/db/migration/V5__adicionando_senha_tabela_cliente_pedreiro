@@ -1,0 +1,5 @@
+ALTER TABLE pedreiro
+ADD COLUMN senha VARCHAR(255);
+
+ALTER TABLE cliente
+ADD COLUMN senha VARCHAR(255);

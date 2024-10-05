@@ -27,6 +27,7 @@ public class Pedreiro {
 	private String nome;
 	private String contatoWhatsApp;
 	private String email;
+	private String senha;
 
 	@ManyToMany
 	@JoinTable(name = "pedreiro_especialidade", joinColumns = @JoinColumn(name = "pedreiro_id"), inverseJoinColumns = @JoinColumn(name = "especialidade_id"))

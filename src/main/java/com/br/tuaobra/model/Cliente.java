@@ -33,6 +33,7 @@ public class Cliente {
 	private String urlImagemPerfil;
 	private String urlListaOrcamento;
 	private String contatoWhatsApp;
+	private String senha;
 	
 	@ToStringExclude
 	@OneToOne(cascade = CascadeType.ALL)

@@ -98,7 +98,6 @@ public class PedreiroService {
 	private boolean checarCampos(Pedreiro pedreiro) {
 		boolean checados = true;
 		if(!StringUtils.hasLength(pedreiro.getNome())
-				|| !StringUtils.hasLength(pedreiro.getUrlImagemPerfil())
 				|| !StringUtils.hasLength(pedreiro.getDescricao())
 				|| !StringUtils.hasLength(pedreiro.getContatoWhatsApp())
 				|| !StringUtils.hasLength(pedreiro.getEmail())) {

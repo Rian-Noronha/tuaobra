@@ -35,7 +35,7 @@ public class Demanda {
 	private List<Pedreiro> pedreiros;
 	
 	@ToStringExclude
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JsonBackReference
 	private Cliente cliente;
 

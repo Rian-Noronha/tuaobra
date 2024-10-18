@@ -111,6 +111,7 @@ public class DemandaService {
 			deman.setEndereco(demanda.getEndereco());
 			deman.setDataPublicacao(demanda.getDataPublicacao());
 			deman.setCliente(demanda.getCliente());
+			deman.setUrlListaOrcamento(demanda.getUrlListaOrcamento());
 
 			return this.demandaRepository.save(deman);
 

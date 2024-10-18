@@ -70,7 +70,9 @@ public class DemandaService {
 		demandaClienteDTO.setDetalhes(demanda.getDetalhes());
 		demandaClienteDTO.setDataPublicacao(demanda.getDataPublicacao());
 		demandaClienteDTO.setTrabalhoASerFeito(demanda.getTrabalhoSerFeito());
-		demandaClienteDTO.setCep(demanda.getCepOndeSera());
+		demandaClienteDTO.setCep(demanda.getEndereco().getCep());
+		demandaClienteDTO.setNomeLugar(demanda.getEndereco().getNomeLugar());
+		demandaClienteDTO.setNumero(demanda.getEndereco().getNumero());
 		demandaClienteDTO.setNomeCliente(cliente.getNome());
 		demandaClienteDTO.setEmailCliente(cliente.getEmail());
 		demandaClienteDTO.setContatoCliente(cliente.getContatoWhatsApp());
@@ -106,7 +108,7 @@ public class DemandaService {
 
 			deman.setDetalhes(demanda.getDetalhes());
 			deman.setTrabalhoSerFeito(demanda.getTrabalhoSerFeito());
-			deman.setCepOndeSera(demanda.getCepOndeSera());
+			deman.setEndereco(demanda.getEndereco());
 			deman.setDataPublicacao(demanda.getDataPublicacao());
 			deman.setCliente(demanda.getCliente());
 
@@ -121,8 +123,9 @@ public class DemandaService {
 		boolean checados = true;
 
 		if (!StringUtils.hasLength(demanda.getDetalhes()) || !StringUtils.hasLength(demanda.getTrabalhoSerFeito())
-				|| !StringUtils.hasLength(demanda.getCepOndeSera()) || demanda.getDataPublicacao() == null
-				|| demanda.getCliente() == null) {
+				|| demanda.getDataPublicacao() == null
+				|| demanda.getCliente() == null
+				|| demanda.getEndereco() == null) {
 			checados = false;
 		}
 

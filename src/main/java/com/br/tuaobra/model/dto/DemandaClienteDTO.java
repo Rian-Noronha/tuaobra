@@ -15,9 +15,11 @@ public class DemandaClienteDTO {
 	private String detalhes;
 	private LocalDateTime dataPublicacao;
 	private String trabalhoASerFeito;
-	private String cep;
 	private String nomeCliente;
 	private String emailCliente;
 	private String contatoCliente;
+	private String cep;
+	private String nomeLugar;
+	private String numero;
 	
 }

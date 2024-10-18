@@ -11,8 +11,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +29,13 @@ public class Demanda {
 	private Long id;
 	private String detalhes;
 	private String trabalhoSerFeito;
-	private String cepOndeSera;
 	private LocalDateTime dataPublicacao;
 
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
+	private Endereco endereco;
+	
 	@ToStringExclude
 	@ManyToMany(mappedBy = "demandas")
 	private List<Pedreiro> pedreiros;

@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringExclude;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +41,7 @@ public class Demanda {
 	
 	@ToStringExclude
 	@ManyToMany(mappedBy = "demandas")
+	@JsonManagedReference 
 	private List<Pedreiro> pedreiros;
 	
 	@ToStringExclude

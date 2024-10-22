@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.model.Pedreiro;
+import com.br.tuaobra.repository.DemandaRepository;
 import com.br.tuaobra.repository.PedreiroRepository;
+import com.br.tuaobra.utils.exceptions.DemandaNaoEncontradaException;
 import com.br.tuaobra.utils.exceptions.EmailJaExisteException;
 import com.br.tuaobra.utils.exceptions.PedreiroNaoEncontradoException;
 
@@ -18,6 +21,9 @@ public class PedreiroService {
 	
 	@Autowired
 	private PedreiroRepository pedreiroRepository;
+	
+	@Autowired
+	private DemandaRepository demandaRepository;
 	
 	
 	public void salvarPedreiro(Pedreiro pedreiro) {
@@ -44,6 +50,19 @@ public class PedreiroService {
 		
 	}
 	
+	public void vincularDemandaPedreiroPorEmail(String email, Long demandaId) {
+		Pedreiro pedreiro = pedreiroRepository.findByEmail(email)
+				.orElseThrow(() -> new PedreiroNaoEncontradoException("Pedreiro não encontrado com o e-mail: " + email));
+	
+		Demanda demanda = demandaRepository.findById(demandaId)
+				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada com id: " + demandaId));
+		pedreiro.getDemandas().add(demanda);
+		
+		pedreiroRepository.save(pedreiro);
+		
+	}
+	
+	
 	public List<Pedreiro> listarPedreiros(){
 		return pedreiroRepository.findAll();
 	}
@@ -52,6 +71,7 @@ public class PedreiroService {
 		return pedreiroRepository.findById(id)
 				.orElseThrow(() -> new PedreiroNaoEncontradoException("Pedreiro não encontrado"));
 	}
+	
 	
 	public void deletarPedreiro(Long id) {
 		if(id == null || id == 0L) {
@@ -87,7 +107,7 @@ public class PedreiroService {
 			   
 			    pedre.setEspecialidades(pedreiro.getEspecialidades());
 			    pedre.setEndereco(pedreiro.getEndereco());
-			    		    
+			    pedre.setDemandas(pedreiro.getDemandas());			    		    
 			    return this.pedreiroRepository.save(pedre);
 		}else {
 			throw new RuntimeException("Por favor, preencha todos os campos");
@@ -98,10 +118,10 @@ public class PedreiroService {
 	private boolean checarCampos(Pedreiro pedreiro) {
 		boolean checados = true;
 		if(!StringUtils.hasLength(pedreiro.getNome())
-				|| !StringUtils.hasLength(pedreiro.getUrlImagemPerfil())
 				|| !StringUtils.hasLength(pedreiro.getDescricao())
 				|| !StringUtils.hasLength(pedreiro.getContatoWhatsApp())
-				|| !StringUtils.hasLength(pedreiro.getEmail())) {
+				|| !StringUtils.hasLength(pedreiro.getEmail())
+				|| pedreiro.getEndereco() == null) {
 			checados = false;
 		}
 		

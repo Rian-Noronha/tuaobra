@@ -3,6 +3,7 @@ package com.br.tuaobra.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class PedreiroController {
 	@ResponseStatus(HttpStatus.OK)
 	public Pedreiro buscarPeloId(@PathVariable Long id) {
 		return this.pedreiroService.buscarPedreiro(id);
-	}
+	}	
 	
 	@DeleteMapping("/pedreiro/{id}")
 	@ResponseStatus(HttpStatus.OK)
@@ -49,6 +50,12 @@ public class PedreiroController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvar(@RequestBody Pedreiro pedreiro) {
 		this.pedreiroService.salvarPedreiro(pedreiro);
+	}
+	
+	@PostMapping("/pedreiro/email/{email}/demanda/{demandaId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void vincularDemandaPedreiro(@PathVariable String email, @PathVariable Long demandaId) {
+		pedreiroService.vincularDemandaPedreiroPorEmail(email, demandaId);
 	}
 	
 	@PutMapping("/pedreiro/{id}")

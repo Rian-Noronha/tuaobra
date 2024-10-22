@@ -1,23 +1,28 @@
 CREATE TABLE IF NOT EXISTS public.casa_construcao
 (
     id bigint NOT NULL,
-    avaliacao double precision NOT NULL,
     contato_whats_app character varying(255) COLLATE pg_catalog."default",
     descricao character varying(255) COLLATE pg_catalog."default",
     email character varying(255) COLLATE pg_catalog."default",
     frete character varying(255) COLLATE pg_catalog."default",
     horario character varying(255) COLLATE pg_catalog."default",
     nome character varying(255) COLLATE pg_catalog."default",
-    endereco_id bigint,
+    senha character varying(255) COLLATE pg_catalog."default",
     url_imagem_perfil character varying(255) COLLATE pg_catalog."default",
+    endereco_id bigint,
     CONSTRAINT casa_construcao_pkey PRIMARY KEY (id),
     CONSTRAINT ukfqwffiw5r20h929abu1t2pkyp UNIQUE (endereco_id),
     CONSTRAINT fk37g7h03b6oy0b1nox9t000ay1 FOREIGN KEY (endereco_id)
         REFERENCES public.endereco (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.casa_construcao
+    OWNER to postgres;
+    
 CREATE TABLE IF NOT EXISTS public.cliente
 (
     id bigint NOT NULL,
@@ -32,7 +37,12 @@ CREATE TABLE IF NOT EXISTS public.cliente
         REFERENCES public.endereco (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.cliente
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.cliente_casa_construcao
 (
@@ -46,23 +56,38 @@ CREATE TABLE IF NOT EXISTS public.cliente_casa_construcao
         REFERENCES public.casa_construcao (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
 
-CREATE TABLE IF NOT EXISTS public.demanda
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.cliente_casa_construcao
+    OWNER to postgres;
+    
+ CREATE TABLE IF NOT EXISTS public.demanda
 (
     id bigint NOT NULL,
     data_publicacao timestamp(6) without time zone,
     detalhes character varying(255) COLLATE pg_catalog."default",
     trabalho_ser_feito character varying(255) COLLATE pg_catalog."default",
+    url_lista_orcamento character varying(255) COLLATE pg_catalog."default",
     cliente_id bigint,
-    cep_onde_sera character varying(255) COLLATE pg_catalog."default",
+    endereco_id bigint,
     CONSTRAINT demanda_pkey PRIMARY KEY (id),
+    CONSTRAINT ukjsav6knu4owgi6ne9mvkphsni UNIQUE (endereco_id),
     CONSTRAINT fklshxbeku0cmwq6ttoa7co7qr7 FOREIGN KEY (cliente_id)
         REFERENCES public.cliente (id) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkqrvcodpyb0gmll8g4t4ioft0 FOREIGN KEY (endereco_id)
+        REFERENCES public.endereco (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.demanda
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.endereco
 (
@@ -71,20 +96,28 @@ CREATE TABLE IF NOT EXISTS public.endereco
     nome_lugar character varying(255) COLLATE pg_catalog."default",
     numero character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT endereco_pkey PRIMARY KEY (id)
-);
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.endereco
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.especialidade
 (
     id bigint NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT especialidade_pkey PRIMARY KEY (id)
-);
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.especialidade
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.pedreiro
 (
     id bigint NOT NULL,
-    avaliacao double precision NOT NULL,
     contato_whats_app character varying(255) COLLATE pg_catalog."default",
     descricao character varying(255) COLLATE pg_catalog."default",
     email character varying(255) COLLATE pg_catalog."default",
@@ -97,8 +130,12 @@ CREATE TABLE IF NOT EXISTS public.pedreiro
         REFERENCES public.endereco (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pedreiro
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.pedreiro_demanda
 (
@@ -112,8 +149,12 @@ CREATE TABLE IF NOT EXISTS public.pedreiro_demanda
         REFERENCES public.demanda (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
 
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pedreiro_demanda
+    OWNER to postgres;
 
 CREATE TABLE IF NOT EXISTS public.pedreiro_especialidade
 (
@@ -127,4 +168,10 @@ CREATE TABLE IF NOT EXISTS public.pedreiro_especialidade
         REFERENCES public.pedreiro (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.pedreiro_especialidade
+    OWNER to postgres;   
+    

@@ -56,9 +56,13 @@ public class PedreiroService {
 	
 		Demanda demanda = demandaRepository.findById(demandaId)
 				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada com id: " + demandaId));
-		pedreiro.getDemandas().add(demanda);
 		
-		pedreiroRepository.save(pedreiro);
+		if (pedreiro.getDemandas().contains(demanda)) {
+	        throw new IllegalArgumentException("Demanda já vinculada ao pedreiro com e-mail: " + email);
+	    } else {
+	        pedreiro.getDemandas().add(demanda);
+	        pedreiroRepository.save(pedreiro);
+	    }
 		
 	}
 	

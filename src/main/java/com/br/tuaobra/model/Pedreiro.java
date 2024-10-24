@@ -1,8 +1,7 @@
 package com.br.tuaobra.model;
 
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -44,7 +43,7 @@ public class Pedreiro {
 			name = "pedreiro_demanda",
 			joinColumns = @JoinColumn(name = "pedreiro_id"),
 			inverseJoinColumns = @JoinColumn(name = "demanda_id"))
-	@JsonBackReference
+	@JsonIgnore
 	private List<Demanda> demandas;
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.tuaobra.model.Cliente;
 import com.br.tuaobra.model.Pedreiro;
 import com.br.tuaobra.service.PedreiroService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,13 @@ public class PedreiroController {
 		
 		return this.pedreiroService.listarPedreiros();
 		
+	}
+	
+	
+	@GetMapping("/clientesvinculadospedreirodemanda/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Cliente> listarClientesPedreiroDemanda(@PathVariable String email){
+		return this.pedreiroService.listarClientesVinculadoPedreiroDemanda(email);
 	}
 	
 	@GetMapping("/pedreiro/{id}")

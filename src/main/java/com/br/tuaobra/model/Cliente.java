@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringExclude;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -40,6 +41,7 @@ public class Cliente {
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@JsonIgnore
 	private List<Demanda> demandas;
 
 	@ManyToMany
@@ -47,6 +49,7 @@ public class Cliente {
 			name = "cliente_casa_construcao",
 			joinColumns = @JoinColumn(name = "cliente_id"),
 			inverseJoinColumns = @JoinColumn(name = "casa_construcao_id"))
+	@JsonIgnore
 	private List<CasaConstrucao> casasConstrucao;
 
 }

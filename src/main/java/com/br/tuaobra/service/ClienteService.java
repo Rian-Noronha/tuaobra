@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.br.tuaobra.model.Cliente;
+import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.repository.ClienteRepository;
 import com.br.tuaobra.utils.exceptions.CamposNaoValidadosException;
 import com.br.tuaobra.utils.exceptions.ClienteNaoEncontradoException;
@@ -47,11 +48,25 @@ public class ClienteService {
 	public List<Cliente> listarClientes() {
 		return this.clienteRepository.findAll();
 	}
+	
+	public List<Demanda> listarDemandasCliente(String email){
+		if(email.isEmpty() || email == null) {
+			throw new RuntimeException("Este email referente ao cliente não existe");
+		}
+		
+		
+		Cliente cliente = this.clienteRepository.findByEmail(email.trim().toLowerCase())
+				.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com o email: " + email + " não encontrado"));
+		
+		
+		return cliente.getDemandas();
+	}
 
 	public Cliente buscarCliente(Long id) {
 		return this.clienteRepository.findById(id)
 				.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
 	}
+	
 
 	public void deletarCliente(Long id) {
 		if (id == null || id == 0L) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.tuaobra.model.Cliente;
+import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.service.ClienteService;
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,13 @@ public class ClienteController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<Cliente> listar(){
 		return this.clienteService.listarClientes();
+	}
+	
+	
+	@GetMapping("demandascliente/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Demanda> listarDemandasCliente(@PathVariable String email){
+		return this.clienteService.listarDemandasCliente(email);
 	}
 	
 	@GetMapping("/cliente/{id}")

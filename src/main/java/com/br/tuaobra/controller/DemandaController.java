@@ -56,6 +56,12 @@ public class DemandaController {
 		this.demandaService.salvarDemanda(demanda);
 	}
 	
+	@PostMapping("/demandacliente")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void salvarDemandaCliente(@RequestBody Demanda demanda) {
+		this.demandaService.salvarDemandaCliente(demanda);
+	}
+	
 	@PutMapping("/demanda/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Demanda atualizar(@PathVariable Long id, @RequestBody Demanda demanda) {

@@ -94,9 +94,7 @@ public class ClienteService {
 	public boolean checarCampos(Cliente cliente) {
 		boolean checados = true;
 
-		if (!StringUtils.hasLength(cliente.getNome()) || !StringUtils.hasLength(cliente.getEmail())
-				|| !StringUtils.hasLength(cliente.getUrlImagemPerfil())
-				|| !StringUtils.hasLength(cliente.getContatoWhatsApp()) || cliente.getEndereco() == null){
+		if (!StringUtils.hasLength(cliente.getNome()) || !StringUtils.hasLength(cliente.getEmail())){
 			checados = false;
 		}
 

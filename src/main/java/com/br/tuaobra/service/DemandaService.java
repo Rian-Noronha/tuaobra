@@ -48,6 +48,31 @@ public class DemandaService {
 			throw new CamposNaoValidadosException("Campos da demanda não foram validados");
 		}
 	}
+	
+	
+	public void salvarDemandaCliente(Demanda demanda) {
+		if (demanda == null) {
+			throw new DemandaNulaException("Demanda está nula");
+		}
+
+		if (demanda.getId() != null) {
+			demanda.setId(null);
+		}
+		
+
+		if (checarCampos(demanda)) {
+			
+			Cliente clienteExistente = clienteRepository.findByEmail(demanda.getCliente().getEmail())
+					.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
+			
+			demanda.setCliente(clienteExistente);
+			
+			this.demandaRepository.save(demanda);
+			
+		} else {
+			throw new CamposNaoValidadosException("Campos da demanda não foram validados");
+		}
+	}
 
 	public List<Demanda> listarDemandas() {
 		return this.demandaRepository.findAll();

@@ -5,45 +5,14 @@ services:
     build: .
     container_name: tuaobra-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/tuaobra
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: dev12345
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cd27da2sn4hj7h.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d2egb07js3elc1
+      SPRING_DATASOURCE_USERNAME: u80vsslmaehb0a
+      SPRING_DATASOURCE_PASSWORD: pe8f8262b13e2a77123c23dc0f57365db5ba0c095d852d2b94f61d28c39b791b7
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
     ports:
       - "8080:8080"
-    depends_on:
-      - db
     networks:
       - default
-
-  db:
-    image: postgres:13
-    container_name: tuaobra-db
-    environment:
-      POSTGRES_DB: tuaobra
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: dev12345
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5436:5432"
-    networks:
-      - default
-
-  adminer:
-    image: adminer
-    container_name: tuaobra-adminer
     restart: always
-    ports:
-      - "8081:8080"
-    depends_on:
-      - db
-    networks:
-      - default
 
-volumes:
-  postgres-data:
-    driver: local
 
-networks:
-  default:
-    driver: bridge

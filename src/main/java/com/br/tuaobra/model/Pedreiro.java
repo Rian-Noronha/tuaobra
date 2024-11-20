@@ -36,7 +36,7 @@ public class Pedreiro implements UserDetails {
 	private String contatoWhatsApp;
 	private String email;
 	@JsonIgnore
-	private String senha; // Campo necessário para autenticação
+	private String senha;
 
 	@ManyToMany
 	@JoinTable(name = "pedreiro_especialidade", joinColumns = @JoinColumn(name = "pedreiro_id"), inverseJoinColumns = @JoinColumn(name = "especialidade_id"))
@@ -57,7 +57,6 @@ public class Pedreiro implements UserDetails {
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// Aqui você pode adicionar diferentes roles se necessário. Exemplo:
 		return List.of(new SimpleGrantedAuthority("ROLE_PEDREIRO"));
 	}
 

@@ -1,11 +1,10 @@
 package com.br.tuaobra.model;
 
+import java.util.Collection;
 import java.util.List;
-
-import org.apache.commons.lang3.builder.ToStringExclude;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Cliente implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,15 +32,12 @@ public class Cliente {
 	private String email;
 	private String urlImagemPerfil;
 	private String contatoWhatsApp;
-	
-	@ToStringExclude
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName = "id")
 	private Endereco endereco;
-	
+
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	@JsonIgnore
 	private List<Demanda> demandas;
 
 	@ManyToMany
@@ -49,7 +45,20 @@ public class Cliente {
 			name = "cliente_casa_construcao",
 			joinColumns = @JoinColumn(name = "cliente_id"),
 			inverseJoinColumns = @JoinColumn(name = "casa_construcao_id"))
-	@JsonIgnore
 	private List<CasaConstrucao> casasConstrucao;
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+	}
+
+	@Override
+	public String getPassword() {
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
 }

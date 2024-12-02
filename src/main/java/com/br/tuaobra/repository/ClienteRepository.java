@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.br.tuaobra.model.Cliente;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-	
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+
 	Optional<Cliente> findByEmail(String email);
-	
+
+	Optional<Cliente> findByFirebaseUid(String firebaseUid);
+
 }

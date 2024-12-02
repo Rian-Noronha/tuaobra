@@ -12,57 +12,52 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.br.tuaobra.model.Cliente;
 import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.service.ClienteService;
-
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/")
 public class ClienteController {
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@GetMapping("/clientes")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Cliente> listar(){
+	public List<Cliente> listar() {
 		return this.clienteService.listarClientes();
 	}
-	
-	
+
 	@GetMapping("demandascliente/email/{email}")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Demanda> listarDemandasCliente(@PathVariable String email){
+	public List<Demanda> listarDemandasCliente(@PathVariable String email) {
 		return this.clienteService.listarDemandasCliente(email);
 	}
-	
+
 	@GetMapping("/cliente/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Cliente buscarPorId(@PathVariable Long id) {
 		return this.clienteService.buscarCliente(id);
 	}
-	
+
 	@DeleteMapping("/cliente/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deletar(@PathVariable Long id) {
 		this.clienteService.deletarCliente(id);
 	}
-	
+
 	@PostMapping("/cliente")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvar(@RequestBody Cliente cliente) {
 		this.clienteService.salvarCliente(cliente);
 	}
-	
-	
+
 	@PutMapping("/cliente/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Cliente atualizar(@PathVariable Long id, @RequestBody Cliente cliente) {
 		return this.clienteService.atualizarCliente(cliente);
 	}
-	
 
 }

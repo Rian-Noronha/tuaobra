@@ -30,7 +30,7 @@ public class ClienteService {
 		if (cliente.getId() != null) {
 			cliente.setId(null);
 		}
-		
+
 		validarEmail(cliente.getEmail());
 
 		if (clienteRepository.findByEmail(cliente.getEmail()).isPresent()) {
@@ -48,17 +48,15 @@ public class ClienteService {
 	public List<Cliente> listarClientes() {
 		return this.clienteRepository.findAll();
 	}
-	
-	public List<Demanda> listarDemandasCliente(String email){
-		if(email.isEmpty() || email == null) {
+
+	public List<Demanda> listarDemandasCliente(String email) {
+		if (email.isEmpty() || email == null) {
 			throw new RuntimeException("Este email referente ao cliente não existe");
 		}
-		
-		
-		Cliente cliente = this.clienteRepository.findByEmail(email.trim().toLowerCase())
-				.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com o email: " + email + " não encontrado"));
-		
-		
+
+		Cliente cliente = this.clienteRepository.findByEmail(email.trim().toLowerCase()).orElseThrow(
+				() -> new ClienteNaoEncontradoException("Cliente com o email: " + email + " não encontrado"));
+
 		return cliente.getDemandas();
 	}
 
@@ -66,7 +64,6 @@ public class ClienteService {
 		return this.clienteRepository.findById(id)
 				.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
 	}
-	
 
 	public void deletarCliente(Long id) {
 		if (id == null || id == 0L) {
@@ -79,29 +76,29 @@ public class ClienteService {
 
 		this.clienteRepository.deleteById(id);
 	}
-	
+
 	public Cliente atualizarCliente(Cliente cliente) {
-		if(cliente.getId() == null || cliente.getId() == 0L) {
+		if (cliente.getId() == null || cliente.getId() == 0L) {
 			throw new RuntimeException("Por favor, insira um id de cliente válido");
 		}
-		
-		if(!this.clienteRepository.existsById(cliente.getId())) {
+
+		if (!this.clienteRepository.existsById(cliente.getId())) {
 			throw new RuntimeException("O cliente com id " + cliente.getId() + " não existe");
 		}
-		
-		if(checarCampos(cliente)) {
+
+		if (checarCampos(cliente)) {
 			validarEmail(cliente.getEmail());
-			Cliente client = this.clienteRepository.findByEmail(cliente.getEmail())
-					.orElseThrow(() -> new RuntimeException("Falha em buscar cliente com e-mail " + cliente.getEmail()));
+			Cliente client = this.clienteRepository.findByEmail(cliente.getEmail()).orElseThrow(
+					() -> new RuntimeException("Falha em buscar cliente com e-mail " + cliente.getEmail()));
 			client.setNome(cliente.getNome());
 			client.setUrlImagemPerfil(cliente.getUrlImagemPerfil());
 			client.setContatoWhatsApp(cliente.getContatoWhatsApp());
 			client.setEndereco(cliente.getEndereco());
 			client.setDemandas(cliente.getDemandas());
 			client.setCasasConstrucao(cliente.getCasasConstrucao());
-			
+
 			return this.clienteRepository.save(client);
-		}else {
+		} else {
 			throw new CamposNaoValidadosException("Por favor, preencha todos os campos");
 		}
 	}
@@ -109,7 +106,7 @@ public class ClienteService {
 	public boolean checarCampos(Cliente cliente) {
 		boolean checados = true;
 
-		if (!StringUtils.hasLength(cliente.getNome()) || !StringUtils.hasLength(cliente.getEmail())){
+		if (!StringUtils.hasLength(cliente.getNome()) || !StringUtils.hasLength(cliente.getEmail())) {
 			checados = false;
 		}
 
@@ -124,6 +121,11 @@ public class ClienteService {
 		} catch (Exception e) {
 			throw new RuntimeException("E-mail inválido");
 		}
+	}
+
+	public Cliente autenticarCliente(String firebaseUid) {
+	    return clienteRepository.findByFirebaseUid(firebaseUid)
+	        .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com UID não encontrado: " + firebaseUid));
 	}
 
 }

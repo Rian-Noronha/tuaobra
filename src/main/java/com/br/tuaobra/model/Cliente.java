@@ -3,7 +3,6 @@ package com.br.tuaobra.model;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringExclude;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
@@ -33,6 +32,7 @@ public class Cliente {
 	private String email;
 	private String urlImagemPerfil;
 	private String contatoWhatsApp;
+	private String firebaseUid;
 	
 	@ToStringExclude
 	@OneToOne(cascade = CascadeType.ALL)

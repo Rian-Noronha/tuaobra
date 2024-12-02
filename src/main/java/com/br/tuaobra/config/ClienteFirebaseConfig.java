@@ -15,7 +15,7 @@ public class ClienteFirebaseConfig {
     private static final String SERVICE_ACCOUNT_JSON_PATH = "/home/rian/springboot-service-account-key.json";  // Caminho do arquivo JSON
 
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
+    public FirebaseApp clienteFirebaseApp() throws IOException {
         if (FirebaseApp.getApps().isEmpty()) {
             GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(SERVICE_ACCOUNT_JSON_PATH));
             FirebaseOptions options = new FirebaseOptions.Builder()

@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 @Configuration
-public class FirebaseConfig {
+public class ClienteFirebaseConfig {
 
     private static final String SERVICE_ACCOUNT_JSON_PATH = "/home/rian/springboot-service-account-key.json";  // Caminho do arquivo JSON
 

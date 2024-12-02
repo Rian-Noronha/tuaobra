@@ -29,25 +29,24 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/api/auth/logincliente")
+				.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/api/auth/cliente", 
+						"/api/auth/cliente")
 						.permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/cliente", "/api/demanda", "/api/demandacliente")
+						.requestMatchers(HttpMethod.POST, "/api/cliente", "/api/demanda", "/api/demandacliente", "/api/pedreiro"
+								, "/api/pedreiro/email/{email}/demanda/{demandaId}")
 						.permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/demandas", "/api/demandascliente/email/{email}",
-								"/api/clientes", "/api/cliente/{id}")
+								"/api/clientes", "/api/cliente/{id}", "/api/demandacliente/{id}", "/api/clientesvinculadospedreirodemanda/email/{email}")
 						.permitAll().requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**")
 						.permitAll()
 
 						.anyRequest().authenticated())
 				.addFilterBefore(firebaseAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
-	
-	
-	 	@Bean
-	    public AuthenticationManager authenticationManager() throws Exception {
-	        return authenticationConfiguration.getAuthenticationManager();
-	    }
-	 	
-	 	
+
+	@Bean
+	public AuthenticationManager authenticationManager() throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
 
 }

@@ -11,7 +11,4 @@ import com.br.tuaobra.model.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	Optional<Cliente> findByEmail(String email);
-
-	Optional<Cliente> findByFirebaseUid(String firebaseUid);
-
 }

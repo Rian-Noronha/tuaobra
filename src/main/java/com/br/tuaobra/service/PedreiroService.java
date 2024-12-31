@@ -143,11 +143,6 @@ public class PedreiroService {
 		return checados;
 	}
 	
-	
-	public Pedreiro autenticarPedreiro(String firebaseUid) {
-		return pedreiroRepository.findByFirebaseUid(firebaseUid)
-				.orElseThrow(() -> new PedreiroNaoEncontradoException("Pedreiro com UID não encontrado: " + firebaseUid));
-	}
 
 	private void validarEmail(String email) {
 		try {

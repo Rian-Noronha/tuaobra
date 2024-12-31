@@ -123,9 +123,4 @@ public class ClienteService {
 		}
 	}
 
-	public Cliente autenticarCliente(String firebaseUid) {
-	    return clienteRepository.findByFirebaseUid(firebaseUid)
-	        .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente com UID não encontrado: " + firebaseUid));
-	}
-
 }

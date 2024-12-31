@@ -10,6 +10,5 @@ import com.br.tuaobra.model.Pedreiro;
 public interface PedreiroRepository extends JpaRepository<Pedreiro, Long> {
 	
 	Optional<Pedreiro> findByEmail(String email);
-	Optional<Pedreiro> findByFirebaseUid(String firebaseUid);
 	
 }

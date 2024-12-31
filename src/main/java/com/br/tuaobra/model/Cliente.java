@@ -32,7 +32,6 @@ public class Cliente {
 	private String email;
 	private String urlImagemPerfil;
 	private String contatoWhatsApp;
-	private String firebaseUid;
 	
 	@ToStringExclude
 	@OneToOne(cascade = CascadeType.ALL)

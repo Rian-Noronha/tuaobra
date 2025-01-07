@@ -1,16 +1,25 @@
 package com.br.tuaobra.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.br.tuaobra.model.CasaConstrucao;
+import com.br.tuaobra.model.Cliente;
+import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.repository.CasaConstrucaoRepository;
+import com.br.tuaobra.repository.ClienteRepository;
+import com.br.tuaobra.repository.DemandaRepository;
 import com.br.tuaobra.utils.exceptions.CamposNaoValidadosException;
 import com.br.tuaobra.utils.exceptions.CasaConstrucaoNaoEncontradaException;
 import com.br.tuaobra.utils.exceptions.CasaConstrucaoNulaException;
+import com.br.tuaobra.utils.exceptions.ClienteNaoEncontradoException;
+import com.br.tuaobra.utils.exceptions.DemandaNaoEncontradaException;
 import com.br.tuaobra.utils.exceptions.EmailJaExisteException;
 import jakarta.mail.internet.InternetAddress;
 
@@ -19,6 +28,12 @@ public class CasaConstrucaoService {
 
 	@Autowired
 	private CasaConstrucaoRepository casaConstrucaoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private DemandaRepository demandaRepository;
 
 	public void salvarCasaConstrucao(CasaConstrucao casaConstrucao) {
 		if (casaConstrucao == null) {
@@ -40,6 +55,47 @@ public class CasaConstrucaoService {
 		} else {
 			throw new CamposNaoValidadosException("Campos da casa de construção não foram validados");
 		}
+	}
+
+	public void vincularCasaCliente(Long casaId, Long demandaId, String email) {
+		CasaConstrucao casaConstrucao = this.casaConstrucaoRepository.findById(casaId)
+				.orElseThrow(() -> new CasaConstrucaoNaoEncontradaException(
+						"Casa de construção com id: " + casaId + " não encontrada"));
+
+		Cliente cliente = this.clienteRepository.findByEmail(email).orElseThrow(
+				() -> new ClienteNaoEncontradoException("Cliente com email: " + email + " não encontrado"));
+
+		Demanda demanda = this.demandaRepository.findById(demandaId)
+				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada"));
+
+		if (casaConstrucao.getClientes().contains(cliente)) {
+			throw new IllegalArgumentException("Cliente já vinculado à casa com e-mail: " + email);
+		} else {
+			if (demanda.getUrlListaOrcamento() != null) {
+				casaConstrucao.getClientes().add(cliente);
+				this.casaConstrucaoRepository.save(casaConstrucao);
+			} else {
+				throw new IllegalArgumentException("Lista de orçamento inválida");
+			}
+		}
+
+	}
+
+	public List<Cliente> listarClientesVinculados(String emailCasa) {
+		return this.casaConstrucaoRepository.findByEmail(emailCasa).map(CasaConstrucao::getClientes)
+				.orElseThrow(() -> new CasaConstrucaoNaoEncontradaException(
+						"Casa de construção com email: " + emailCasa + " não encontrada"));
+	}
+
+	public List<Demanda> listarDemandasClienteVinculadoCasa(String emailCliente) {
+		if (emailCliente.isEmpty() || emailCliente == null) {
+			throw new RuntimeException("Este email referente ao cliente não existe");
+		}
+
+		Cliente cliente = this.clienteRepository.findByEmail(emailCliente.trim().toLowerCase()).orElseThrow(
+				() -> new ClienteNaoEncontradoException("Cliente com o email: " + emailCliente + " não encontrado"));
+
+		return cliente.getDemandas();
 	}
 
 	public List<CasaConstrucao> listarCasasConstrucao() {

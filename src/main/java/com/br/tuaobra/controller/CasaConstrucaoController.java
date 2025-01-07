@@ -14,45 +14,64 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.tuaobra.model.CasaConstrucao;
+import com.br.tuaobra.model.Cliente;
+import com.br.tuaobra.model.Demanda;
 import com.br.tuaobra.service.CasaConstrucaoService;
-
 
 @RestController
 @RequestMapping("/api/")
 public class CasaConstrucaoController {
-	
+
 	@Autowired
 	private CasaConstrucaoService casaConstrucaoService;
-	
+
 	@GetMapping("/casasconstrucao")
 	@ResponseStatus(HttpStatus.OK)
-	public List<CasaConstrucao> listar(){
+	public List<CasaConstrucao> listar() {
 		return this.casaConstrucaoService.listarCasasConstrucao();
 	}
-	
+
+	@GetMapping("/casaconstrucao/clientesvinculados/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Cliente> listarClientesVinculados(@PathVariable String email) {
+		return this.casaConstrucaoService.listarClientesVinculados(email);
+	}
+
+	@GetMapping("/casaconstrucao/demandasclientevinculadocasa/email/{email}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Demanda> listarDemandasClienteVinculadoCasa(@PathVariable String email) {
+		return this.casaConstrucaoService.listarDemandasClienteVinculadoCasa(email);
+	}
+
 	@GetMapping("/casaconstrucao/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public CasaConstrucao buscarPorId(@PathVariable Long id) {
 		return this.casaConstrucaoService.buscarCasaConstrucao(id);
 	}
-	
+
 	@DeleteMapping("/casaconstrucao/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deletar(@PathVariable Long id) {
 		this.casaConstrucaoService.deletarCasaConstrucao(id);
 	}
-	
+
 	@PostMapping("/casaconstrucao")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvar(@RequestBody CasaConstrucao casaConstrucao) {
 		this.casaConstrucaoService.salvarCasaConstrucao(casaConstrucao);
 	}
-	
+
+	@PostMapping("/casaconstrucao/{casaId}/{demandaId}/{email}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void vincularCasaCliente(@PathVariable Long casaId, @PathVariable Long demandaId,
+			@PathVariable String email) {
+		this.casaConstrucaoService.vincularCasaCliente(casaId, demandaId, email);
+	}
+
 	@PutMapping("/casaconstrucao/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public CasaConstrucao atualizar(@PathVariable Long id, @RequestBody CasaConstrucao casaConstrucao) {
 		return this.casaConstrucaoService.atualizarCasaConstrucao(casaConstrucao);
 	}
-	
 
 }

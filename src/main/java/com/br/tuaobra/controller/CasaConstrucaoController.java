@@ -61,11 +61,11 @@ public class CasaConstrucaoController {
 		this.casaConstrucaoService.salvarCasaConstrucao(casaConstrucao);
 	}
 
-	@PostMapping("/casaconstrucao/{casaId}/{demandaId}/{email}")
+	@PostMapping("/casaconstrucao/{casaId}/{demandaId}/{emailcliente}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void vincularCasaCliente(@PathVariable Long casaId, @PathVariable Long demandaId,
-			@PathVariable String email) {
-		this.casaConstrucaoService.vincularCasaCliente(casaId, demandaId, email);
+			@PathVariable String emailcliente) {
+		this.casaConstrucaoService.vincularCasaCliente(casaId, demandaId, emailcliente);
 	}
 
 	@PutMapping("/casaconstrucao/{id}")

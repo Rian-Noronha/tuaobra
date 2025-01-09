@@ -57,22 +57,24 @@ public class CasaConstrucaoService {
 		}
 	}
 
-	public void vincularCasaCliente(Long casaId, Long demandaId, String email) {
+	public void vincularCasaCliente(Long casaId, Long demandaId, String emailCliente) {
 		CasaConstrucao casaConstrucao = this.casaConstrucaoRepository.findById(casaId)
 				.orElseThrow(() -> new CasaConstrucaoNaoEncontradaException(
 						"Casa de construção com id: " + casaId + " não encontrada"));
 
-		Cliente cliente = this.clienteRepository.findByEmail(email).orElseThrow(
-				() -> new ClienteNaoEncontradoException("Cliente com email: " + email + " não encontrado"));
+		Cliente cliente = this.clienteRepository.findByEmail(emailCliente).orElseThrow(
+				() -> new ClienteNaoEncontradoException("Cliente com email: " + emailCliente + " não encontrado"));
 
 		Demanda demanda = this.demandaRepository.findById(demandaId)
 				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada"));
 
 		if (casaConstrucao.getClientes().contains(cliente)) {
-			throw new IllegalArgumentException("Cliente já vinculado à casa com e-mail: " + email);
+			throw new IllegalArgumentException("Cliente já vinculado à casa com e-mail: " + emailCliente);
 		} else {
 			if (demanda.getUrlOrcamento() != null) {
 				casaConstrucao.getClientes().add(cliente);
+				cliente.getCasasConstrucao().add(casaConstrucao);
+				this.clienteRepository.save(cliente);
 				this.casaConstrucaoRepository.save(casaConstrucao);
 			} else {
 				throw new IllegalArgumentException("Lista de orçamento inválida");

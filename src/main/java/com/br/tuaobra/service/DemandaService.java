@@ -119,7 +119,6 @@ public class DemandaService {
 	}
 
 	public Demanda atualizarDemanda(Demanda demanda, String emailCliente) {
-		System.out.println(demanda);
 		if (demanda.getId() == null || demanda.getId() == 0L) {
 			throw new RuntimeException("Por favor, insira um id da demanda válido");
 		}

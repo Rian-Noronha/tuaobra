@@ -118,7 +118,8 @@ public class DemandaService {
 		this.demandaRepository.deleteById(id);
 	}
 
-	public Demanda atualizarDemanda(Demanda demanda) {
+	public Demanda atualizarDemanda(Demanda demanda, String emailCliente) {
+		System.out.println(demanda);
 		if (demanda.getId() == null || demanda.getId() == 0L) {
 			throw new RuntimeException("Por favor, insira um id da demanda válido");
 		}
@@ -130,13 +131,16 @@ public class DemandaService {
 		if (checarCampos(demanda)) {
 			Demanda deman = this.demandaRepository.findById(demanda.getId())
 					.orElseThrow(() -> new RuntimeException("Falha em buscar demanda com id " + demanda.getId()));
+			
+			Cliente cliente = this.clienteRepository.findByEmail(emailCliente)
+					.orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado com email: " + emailCliente));
 
 			deman.setDetalhes(demanda.getDetalhes());
 			deman.setTrabalhoSerFeito(demanda.getTrabalhoSerFeito());
 			deman.setEndereco(demanda.getEndereco());
 			deman.setDataPublicacao(demanda.getDataPublicacao());
-			deman.setCliente(demanda.getCliente());
-			deman.setUrlListaOrcamento(demanda.getUrlListaOrcamento());
+			deman.setCliente(cliente);
+			deman.setUrlOrcamento(demanda.getUrlOrcamento());
 
 			return this.demandaRepository.save(deman);
 
@@ -150,7 +154,6 @@ public class DemandaService {
 
 		if (!StringUtils.hasLength(demanda.getDetalhes()) || !StringUtils.hasLength(demanda.getTrabalhoSerFeito())
 				|| demanda.getDataPublicacao() == null
-				|| demanda.getCliente() == null
 				|| demanda.getEndereco() == null) {
 			checados = false;
 		}

@@ -71,7 +71,7 @@ public class CasaConstrucaoService {
 		if (casaConstrucao.getClientes().contains(cliente)) {
 			throw new IllegalArgumentException("Cliente já vinculado à casa com e-mail: " + email);
 		} else {
-			if (demanda.getUrlListaOrcamento() != null) {
+			if (demanda.getUrlOrcamento() != null) {
 				casaConstrucao.getClientes().add(cliente);
 				this.casaConstrucaoRepository.save(casaConstrucao);
 			} else {

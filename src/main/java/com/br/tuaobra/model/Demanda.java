@@ -32,7 +32,7 @@ public class Demanda {
 	private String detalhes;
 	private String trabalhoSerFeito;
 	private LocalDateTime dataPublicacao;
-	private String urlListaOrcamento;
+	private String urlOrcamento;
 
 	
 	@OneToOne(cascade = CascadeType.ALL)

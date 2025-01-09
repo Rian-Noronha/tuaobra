@@ -62,10 +62,10 @@ public class DemandaController {
 		this.demandaService.salvarDemandaCliente(demanda);
 	}
 	
-	@PutMapping("/demanda/{id}")
+	@PutMapping("/demanda/{id}/{emailcliente}")
 	@ResponseStatus(HttpStatus.OK)
-	public Demanda atualizar(@PathVariable Long id, @RequestBody Demanda demanda) {
-		return this.demandaService.atualizarDemanda(demanda);
+	public Demanda atualizar(@PathVariable Long id, @PathVariable String emailcliente, @RequestBody Demanda demanda) {
+		return this.demandaService.atualizarDemanda(demanda, emailcliente);
 	}
 	
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -34,8 +35,13 @@ public class CasaConstrucaoService {
 
 	@Autowired
 	private DemandaRepository demandaRepository;
+	
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 	public void salvarCasaConstrucao(CasaConstrucao casaConstrucao) {
+		System.out.println(casaConstrucao);
 		if (casaConstrucao == null) {
 			throw new CasaConstrucaoNulaException("Casa construção está nula");
 		}
@@ -51,6 +57,8 @@ public class CasaConstrucaoService {
 		}
 
 		if (checarCampos(casaConstrucao)) {
+			String senha_cripto = this.passwordEncoder.encode(casaConstrucao.getSenha());
+			casaConstrucao.setSenha(senha_cripto);
 			this.casaConstrucaoRepository.save(casaConstrucao);
 		} else {
 			throw new CamposNaoValidadosException("Campos da casa de construção não foram validados");
@@ -156,7 +164,6 @@ public class CasaConstrucaoService {
 
 		if (!StringUtils.hasLength(casaConstrucao.getNome()) || !StringUtils.hasLength(casaConstrucao.getDescricao())
 				|| !StringUtils.hasLength(casaConstrucao.getHorario())
-				|| !StringUtils.hasLength(casaConstrucao.getUrlImagemPerfil())
 				|| !StringUtils.hasLength(casaConstrucao.getFrete())
 				|| !StringUtils.hasLength(casaConstrucao.getEmail())
 				|| !StringUtils.hasLength(casaConstrucao.getContatoWhatsApp())

@@ -13,12 +13,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String cep;
 	private String nomeLugar;
 	private String numero;
+	
+	
+	
+	
+	public Endereco(String cep, String nomeLugar, String numero) {
+		super();
+		this.cep = cep;
+		this.nomeLugar = nomeLugar;
+		this.numero = numero;
+	}
+	
+	
 
 }

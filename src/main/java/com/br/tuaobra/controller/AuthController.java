@@ -40,7 +40,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody CasaDTO casaDTO) {
+    public ResponseEntity<CasaConstrucao> register(@RequestBody CasaDTO casaDTO) {
 		
 		 Endereco endereco = new Endereco(
 			        casaDTO.endereco().cep(),
@@ -60,7 +60,7 @@ public class AuthController {
         );
 
         casaConstrucaoService.salvarCasaConstrucao(casaConstrucao);
-        return ResponseEntity.ok("Casa de construção registrada com sucesso!");
+        return ResponseEntity.ok(casaConstrucao);
     }
 	
 	

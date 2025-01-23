@@ -41,7 +41,6 @@ public class CasaConstrucaoService {
     PasswordEncoder passwordEncoder;
 
 	public void salvarCasaConstrucao(CasaConstrucao casaConstrucao) {
-		System.out.println(casaConstrucao);
 		if (casaConstrucao == null) {
 			throw new CasaConstrucaoNulaException("Casa construção está nula");
 		}

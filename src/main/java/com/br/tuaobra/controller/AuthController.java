@@ -1,5 +1,7 @@
 package com.br.tuaobra.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +38,7 @@ public class AuthController {
 
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		String token = tokenService.generateToken((CasaConstrucao) auth.getPrincipal());
-		return ResponseEntity.ok().body(token);
+		return ResponseEntity.ok().body(Map.of("token", token));
 	}
 
 	@PostMapping("/register")

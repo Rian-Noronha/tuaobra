@@ -18,8 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.br.tuaobra.service.AuthServiceImpl;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,23 +31,38 @@ public class SecurityConfig {
 		this.authenticationConfiguration = authenticationConfiguration;
 	}
 
-	  @Bean
-	    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-	        return httpSecurity
-	                .csrf(csrf -> csrf.disable())
-	                .sessionManagement(session -> session.sessionCreationPolicy(
-	                        SessionCreationPolicy.STATELESS
-	                ))
-	                .authorizeHttpRequests(authorize -> authorize
-	                		.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-	                		.requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-	                        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-	                        .requestMatchers(HttpMethod.POST, "/api/auth/register/admin").hasRole("ADMINISTRADOR")
-	                        .anyRequest().authenticated()
-	                )
-	                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-	                .build();
-	    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+	    return httpSecurity
+	            .csrf(csrf -> csrf.disable())
+	            .sessionManagement(session -> session.sessionCreationPolicy(
+	                    SessionCreationPolicy.STATELESS
+	            ))
+	            .authorizeHttpRequests(authorize -> authorize
+	                    .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/api/cliente", "/api/pedreiro", "/api/demanda", "/api/demandacliente", "/api/pedreiro/email/{email}/demanda/{demandaId}",  "/api/casaconstrucao/{casaId}/{demandaId}/{emailcliente}").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/api/auth/register/admin").hasRole("ADMINISTRADOR")
+	                    .requestMatchers(HttpMethod.PUT, "/api/demanda/**").permitAll() 
+	                    .requestMatchers(HttpMethod.GET, 
+	                            "/api/pedreiros", 
+	                            "/api/clientesvinculadospedreirodemanda/email/{email}", 
+	                            "/api/pedreiro/{id}", 
+	                            "/api/demandas", 
+	                            "/api/demanda/{id}", 	                             
+	                            "/api/demandacliente/{id}", 
+	                            "/api/cliente/{id}",
+	                            "/api/clientes", 
+	                            "/api/demandascliente/email/{email}",
+	                            "/api/casasconstrucao").permitAll()
+	                    .requestMatchers(HttpMethod.GET, "/api/casaconstrucao/{id}", "/api/casaconstrucao/demandasclientevinculadocasa/email/{email}", "/api/casaconstrucao/clientesvinculados/email/{email}")
+	                    .authenticated() 
+	                    .anyRequest().authenticated()
+	            )
+	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+	            .build();
+	}
 
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception {

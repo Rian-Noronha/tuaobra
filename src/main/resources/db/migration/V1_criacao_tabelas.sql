@@ -23,7 +23,8 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.casa_construcao
     OWNER to postgres;
     
-CREATE TABLE IF NOT EXISTS public.cliente
+    
+   CREATE TABLE IF NOT EXISTS public.cliente
 (
     id bigint NOT NULL,
     contato_whats_app character varying(255) COLLATE pg_catalog."default",
@@ -43,8 +44,8 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.cliente
     OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public.cliente_casa_construcao
+    
+ CREATE TABLE IF NOT EXISTS public.cliente_casa_construcao
 (
     cliente_id bigint NOT NULL,
     casa_construcao_id bigint NOT NULL,
@@ -63,13 +64,13 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.cliente_casa_construcao
     OWNER to postgres;
     
- CREATE TABLE IF NOT EXISTS public.demanda
+   CREATE TABLE IF NOT EXISTS public.demanda
 (
     id bigint NOT NULL,
     data_publicacao timestamp(6) without time zone,
     detalhes character varying(255) COLLATE pg_catalog."default",
     trabalho_ser_feito character varying(255) COLLATE pg_catalog."default",
-    url_lista_orcamento character varying(255) COLLATE pg_catalog."default",
+    url_orcamento character varying(255) COLLATE pg_catalog."default",
     cliente_id bigint,
     endereco_id bigint,
     CONSTRAINT demanda_pkey PRIMARY KEY (id),
@@ -88,8 +89,28 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.demanda
     OWNER to postgres;
+    
+  CREATE TABLE IF NOT EXISTS public.demanda_casa_construcao
+(
+    demanda_id bigint NOT NULL,
+    casa_construcao_id bigint NOT NULL,
+    CONSTRAINT fk66y8u3mp6krjhll5sedgqltk5 FOREIGN KEY (demanda_id)
+        REFERENCES public.demanda (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fkosk0en0qwai4gawppw4nmk4g3 FOREIGN KEY (casa_construcao_id)
+        REFERENCES public.casa_construcao (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
 
-CREATE TABLE IF NOT EXISTS public.endereco
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.demanda_casa_construcao
+    OWNER to postgres;
+    
+    
+ CREATE TABLE IF NOT EXISTS public.endereco
 (
     id bigint NOT NULL,
     cep character varying(255) COLLATE pg_catalog."default",
@@ -102,8 +123,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.endereco
     OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public.especialidade
+    
+    
+ CREATE TABLE IF NOT EXISTS public.especialidade
 (
     id bigint NOT NULL,
     nome character varying(255) COLLATE pg_catalog."default",
@@ -114,8 +136,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.especialidade
     OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public.pedreiro
+    
+    
+ CREATE TABLE IF NOT EXISTS public.pedreiro
 (
     id bigint NOT NULL,
     contato_whats_app character varying(255) COLLATE pg_catalog."default",
@@ -136,8 +159,10 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.pedreiro
     OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public.pedreiro_demanda
+    
+    
+    
+    CREATE TABLE IF NOT EXISTS public.pedreiro_demanda
 (
     pedreiro_id bigint NOT NULL,
     demanda_id bigint NOT NULL,
@@ -155,8 +180,10 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.pedreiro_demanda
     OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public.pedreiro_especialidade
+    
+    
+    
+ CREATE TABLE IF NOT EXISTS public.pedreiro_especialidade
 (
     pedreiro_id bigint NOT NULL,
     especialidade_id bigint NOT NULL,

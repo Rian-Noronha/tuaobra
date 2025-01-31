@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -43,6 +44,14 @@ public class Demanda {
 	@ManyToMany(mappedBy = "demandas")
 	@JsonIgnore 
 	private List<Pedreiro> pedreiros;
+	
+	@ManyToMany
+	@JoinTable(
+			name = "demanda_casa_construcao",
+			joinColumns = @JoinColumn(name = "demanda_id"),
+			inverseJoinColumns = @JoinColumn(name = "casa_construcao_id"))
+	@JsonIgnore
+	private List<CasaConstrucao> casasConstrucao;
 	
 	@ToStringExclude
 	@ManyToOne

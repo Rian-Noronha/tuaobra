@@ -37,10 +37,10 @@ public class CasaConstrucaoController {
 		return this.casaConstrucaoService.listarClientesVinculados(email);
 	}
 
-	@GetMapping("/casaconstrucao/demandasclientevinculadocasa/email/{email}")
+	@GetMapping("/casaconstrucao/demandasclientevinculadocasa/emailcliente/{emailcliente}/emailcasa/{emailcasa}")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Demanda> listarDemandasClienteVinculadoCasa(@PathVariable String email) {
-		return this.casaConstrucaoService.listarDemandasClienteVinculadoCasa(email);
+	public List<Demanda> listarDemandasClienteVinculadoCasa(@PathVariable String emailcliente, @PathVariable String emailcasa) {
+		return this.casaConstrucaoService.listarDemandasClienteVinculadoCasa(emailcliente, emailcasa);
 	}
 
 	@GetMapping("/casaconstrucao/{id}")
@@ -65,7 +65,7 @@ public class CasaConstrucaoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void vincularCasaCliente(@PathVariable Long casaId, @PathVariable Long demandaId,
 			@PathVariable String emailcliente) {
-		this.casaConstrucaoService.vincularCasaCliente(casaId, demandaId, emailcliente);
+		this.casaConstrucaoService.vincularCasaClienteDemanda(casaId, demandaId, emailcliente);
 	}
 
 	@PutMapping("/casaconstrucao/{id}")

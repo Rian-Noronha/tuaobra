@@ -64,7 +64,7 @@ public class CasaConstrucaoService {
 		}
 	}
 
-	public void vincularCasaCliente(Long casaId, Long demandaId, String emailCliente) {
+	public void vincularCasaClienteDemanda(Long casaId, Long demandaId, String emailCliente) {
 		CasaConstrucao casaConstrucao = this.casaConstrucaoRepository.findById(casaId)
 				.orElseThrow(() -> new CasaConstrucaoNaoEncontradaException(
 						"Casa de construção com id: " + casaId + " não encontrada"));
@@ -75,14 +75,17 @@ public class CasaConstrucaoService {
 		Demanda demanda = this.demandaRepository.findById(demandaId)
 				.orElseThrow(() -> new DemandaNaoEncontradaException("Demanda não encontrada"));
 
-		if (casaConstrucao.getClientes().contains(cliente)) {
-			throw new IllegalArgumentException("Cliente já vinculado à casa com e-mail: " + emailCliente);
+		if (casaConstrucao.getDemandas().contains(demanda)) {
+			throw new IllegalArgumentException("Casa já está vinculada com: " + demanda.getTrabalhoSerFeito());
 		} else {
 			if (demanda.getUrlOrcamento() != null) {
 				casaConstrucao.getClientes().add(cliente);
 				cliente.getCasasConstrucao().add(casaConstrucao);
+				casaConstrucao.getDemandas().add(demanda);
+				demanda.getCasasConstrucao().add(casaConstrucao);
 				this.clienteRepository.save(cliente);
 				this.casaConstrucaoRepository.save(casaConstrucao);
+				this.demandaRepository.save(demanda);
 			} else {
 				throw new IllegalArgumentException("Lista de orçamento inválida");
 			}
@@ -91,20 +94,40 @@ public class CasaConstrucaoService {
 	}
 
 	public List<Cliente> listarClientesVinculados(String emailCasa) {
-		return this.casaConstrucaoRepository.findByEmail(emailCasa).map(CasaConstrucao::getClientes)
+		CasaConstrucao casaConstrucao = this.casaConstrucaoRepository.findByEmail(emailCasa)
 				.orElseThrow(() -> new CasaConstrucaoNaoEncontradaException(
 						"Casa de construção com email: " + emailCasa + " não encontrada"));
+		
+		Set<Cliente> clientesUnicos = new HashSet<Cliente>();
+		
+		for(Cliente c : casaConstrucao.getClientes()) {	
+			clientesUnicos.add(c);
+		}
+		
+		return new ArrayList<>(clientesUnicos);
+		
 	}
 
-	public List<Demanda> listarDemandasClienteVinculadoCasa(String emailCliente) {
+	public List<Demanda> listarDemandasClienteVinculadoCasa(String emailCliente, String emailCasa) {
 		if (emailCliente.isEmpty() || emailCliente == null) {
 			throw new RuntimeException("Este email referente ao cliente não existe");
 		}
 
 		Cliente cliente = this.clienteRepository.findByEmail(emailCliente.trim().toLowerCase()).orElseThrow(
 				() -> new ClienteNaoEncontradoException("Cliente com o email: " + emailCliente + " não encontrado"));
+		
+		CasaConstrucao casa = this.casaConstrucaoRepository.findByEmail(emailCasa.trim().toLowerCase()).orElseThrow(
+				() -> new CasaConstrucaoNaoEncontradaException("Casa construção com email: " + emailCasa + " não encontrada."));
+		
+		List<Demanda> demandas = new ArrayList<Demanda>();
+		
+		for(Demanda d: cliente.getDemandas()) {
+			if(d.getCasasConstrucao().contains(casa)) {
+				demandas.add(d);
+			}
+		}
 
-		return cliente.getDemandas();
+		return demandas;
 	}
 
 	public List<CasaConstrucao> listarCasasConstrucao() {

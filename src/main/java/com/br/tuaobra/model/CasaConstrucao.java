@@ -58,6 +58,9 @@ public class CasaConstrucao implements UserDetails {
 
     @ManyToMany(mappedBy = "casasConstrucao")
     private List<Cliente> clientes;
+    
+    @ManyToMany(mappedBy = "casasConstrucao")
+    private List<Demanda> demandas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

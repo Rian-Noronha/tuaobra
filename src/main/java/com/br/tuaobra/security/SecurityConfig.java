@@ -56,7 +56,7 @@ public class SecurityConfig {
 	                            "/api/clientes", 
 	                            "/api/demandascliente/email/{email}",
 	                            "/api/casasconstrucao").permitAll()
-	                    .requestMatchers(HttpMethod.GET, "/api/casaconstrucao/{id}", "/api/casaconstrucao/demandasclientevinculadocasa/email/{email}", "/api/casaconstrucao/clientesvinculados/email/{email}")
+	                    .requestMatchers(HttpMethod.GET, "/api/casaconstrucao/{id}", "/api/casaconstrucao/demandasclientevinculadocasa/emailcliente/{emailcliente}/emailcasa/{emailcasa}")
 	                    .authenticated() 
 	                    .anyRequest().authenticated()
 	            )
